@@ -14,3 +14,6 @@ yarn-error.log
 /.idea/
 /tests/
 /storage/
+/public/
+/public/plugins/
+/public/plugins/

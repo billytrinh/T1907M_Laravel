@@ -17,4 +17,8 @@ class WebController extends Controller
     public function register(){
         return view("register");
     }
+
+    public function index(){
+        return view("home");
+    }
 }
