@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +15,13 @@ class WebController extends Controller
     }
 
     public function listCategory(){
-        $categories = DB::table("categories")->get();
+        // Query builder
+        //$categories = DB::table("categories")->get();
+        // Model (ORM)
+        $categories = Category::all();
+        // show with condition: start from D
+        //$categories = Category::where("category_name","LIKE","D%")->get();
+       // dd($categories);
         return view("category.list",[
             "categories"=> $categories
         ]);
@@ -29,11 +36,14 @@ class WebController extends Controller
            "category_name"=> "required|string|min:6|unique:categories"
         ]);
         try{
-            DB::table("categories")->insert([
-                "category_name"=> $request->get("category_name"),
-                "created_at"=> Carbon::now(),
-                "updated_at"=> Carbon::now(),
-            ]);
+            Category::create([
+                "category_name"=> $request->get("category_name")
+            ]); // return an Object of Category Model
+//            DB::table("categories")->insert([
+//                "category_name"=> $request->get("category_name"),
+//                "created_at"=> Carbon::now(),
+//                "updated_at"=> Carbon::now(),
+//            ]);
         }catch (\Exception $exception){
             return redirect()->back();
         }

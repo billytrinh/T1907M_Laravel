@@ -32,10 +32,10 @@
                 <tbody>
                 @foreach($categories as $category)
                     <tr>
-                        <td>{{$category->id}}</td>
-                        <td>{{$category->category_name}}</td>
-                        <td>{{$category->created_at}}</td>
-                        <td>{{$category->updated_at}}</td>
+                        <td>{{$category->__get("id")}}</td>
+                        <td>{{$category->__get("category_name")}}</td>
+                        <td>{{$category->__get("created_at")}}</td>
+                        <td>{{$category->__get("updated_at")}}</td>
                     </tr>
                 @endforeach
                 </tbody>
