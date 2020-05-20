@@ -18,3 +18,8 @@ Route::get('/', "WebController@index");
 Route::get("/demo-routing","WebController@demoRouting");
 Route::get("/login","WebController@login");
 Route::get("/register","WebController@register");
+
+// Category
+Route::get("/list-category","WebController@listCategory");
+Route::get("/new-category","WebController@newCategory");
+Route::post("/save-category","WebController@saveCategory");
