@@ -27,6 +27,7 @@
                     <th>Category Name</th>
                     <th>Created at</th>
                     <th>Updated at</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -36,10 +37,19 @@
                         <td>{{$category->__get("category_name")}}</td>
                         <td>{{$category->__get("created_at")}}</td>
                         <td>{{$category->__get("updated_at")}}</td>
+                        <td>
+                            <a href="{{url("/edit-category/{$category->__get("id")}")}}" class="btn btn-outline-warning">Edit</a>
+                            <form action="{{url("/delete-category/{$category->__get("id")}")}}" method="post">
+                                @method("DELETE")
+                                @csrf
+                                <button type="submit" onclick="return confirm('Are you sure?');" class="btn btn-outline-danger">Delete</button>
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>
             </table>
+            {!! $categories->links() !!}
         </div>
         <!-- /.card-body -->
     </div>

@@ -23,3 +23,8 @@ Route::get("/register","WebController@register");
 Route::get("/list-category","WebController@listCategory");
 Route::get("/new-category","WebController@newCategory");
 Route::post("/save-category","WebController@saveCategory");
+
+Route::get("/edit-category/{id}","WebController@editCategory");
+Route::put("/update-category/{id}","WebController@updateCategory");
+
+Route::delete("/delete-category/{id}","WebController@deleteCategory");

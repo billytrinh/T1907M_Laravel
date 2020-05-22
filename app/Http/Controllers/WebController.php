@@ -18,7 +18,7 @@ class WebController extends Controller
         // Query builder
         //$categories = DB::table("categories")->get();
         // Model (ORM)
-        $categories = Category::all();
+        $categories = Category::paginate(20);
         // show with condition: start from D
         //$categories = Category::where("category_name","LIKE","D%")->get();
        // dd($categories);
@@ -46,6 +46,38 @@ class WebController extends Controller
 //            ]);
         }catch (\Exception $exception){
             return redirect()->back();
+        }
+        return redirect()->to("/list-category");
+    }
+
+    public function editCategory($id){
+//        $category = Category::find($id);
+//        if(is_null($category))
+//            abort(404);
+        $category = Category::findOrFail($id);
+        return view("category.edit",["category"=>$category]);
+    }
+
+    public function updateCategory($id,Request $request){
+        $category = Category::findOrFail($id);
+        $request->validate([
+            "category_name"=> "required|min:6|unique:categories,category_name,{$id}"
+        ]);
+        try {
+            $category->update([
+                "category_name"=> $request->get("category_name")
+            ]);
+        }catch (\Exception $exception){
+            return redirect()->back();
+        }
+        return redirect()->to("/list-category");
+    }
+
+    public function deleteCategory($id){
+        $category = Category::findOrFail($id);
+        try{
+            $category->delete();
+        }catch (\Exception $exception){
         }
         return redirect()->to("/list-category");
     }
