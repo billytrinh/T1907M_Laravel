@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Brand;
 use App\Category;
+use App\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -80,5 +82,19 @@ class WebController extends Controller
         }catch (\Exception $exception){
         }
         return redirect()->to("/list-category");
+    }
+
+    public function listProduct(){
+        $products = Product::paginate(20);
+        return view("product.list",["products"=>$products]);
+    }
+
+    public function newProduct(){
+        $categories = Category::all();
+        $brands = Brand::all();
+        return view("product.new",[
+                "categories"=>$categories,
+                "brands" => $brands
+            ]);
     }
 }

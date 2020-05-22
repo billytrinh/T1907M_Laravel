@@ -75,6 +75,29 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-chart-pie"></i>
+                        <p>
+                            Product
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{url("/list-product")}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>List product</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{url("new-product")}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>New product</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item">
                     <a href="pages/widgets.html" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>

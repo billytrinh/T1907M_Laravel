@@ -28,3 +28,7 @@ Route::get("/edit-category/{id}","WebController@editCategory");
 Route::put("/update-category/{id}","WebController@updateCategory");
 
 Route::delete("/delete-category/{id}","WebController@deleteCategory");
+
+// Product
+Route::get("/list-product","WebController@listProduct");
+Route::get("/new-product","WebController@newProduct");
