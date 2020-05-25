@@ -8,7 +8,7 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form role="form" action="{{url("save-product")}}" method="post">
+        <form role="form" action="{{url("/save-product")}}" method="post" enctype="multipart/form-data">
             @method("POST")
             @csrf
             <div class="card-body">
@@ -18,6 +18,10 @@
                     @error("product_name")
                     <span class="error invalid-feedback">{{$message}}</span>
                     @enderror
+                </div>
+                <div class="form-group">
+                    <label>Product Image</label>
+                    <input class="form-control" name="product_image" type="file"/>
                 </div>
                 <div class="form-group">
                     <label>Product Description</label>

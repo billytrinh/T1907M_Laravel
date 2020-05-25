@@ -31,3 +31,13 @@ $factory->define(\App\Category::class,function (Faker $faker){
         "category_name"=>$faker->unique()->company
     ];
 });
+$factory->define(\App\Product::class,function (Faker $faker){
+    return  [
+      "product_name" => $faker->jobTitle,
+      "product_desc" => $faker->text,
+      "price" => $faker->numberBetween(0,50000),
+      "qty"   => $faker->numberBetween(1, 200),
+      "category_id" => $faker->numberBetween(1,5),
+      "brand_id" => $faker->numberBetween(1,2),
+    ];
+});

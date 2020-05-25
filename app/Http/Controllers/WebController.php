@@ -20,7 +20,7 @@ class WebController extends Controller
         // Query builder
         //$categories = DB::table("categories")->get();
         // Model (ORM)
-        $categories = Category::paginate(20);
+        $categories = Category::withCount("Products")->paginate(20);
         // show with condition: start from D
         //$categories = Category::where("category_name","LIKE","D%")->get();
        // dd($categories);
@@ -85,7 +85,11 @@ class WebController extends Controller
     }
 
     public function listProduct(){
-        $products = Product::paginate(20);
+//        $products = Product::leftJoin("categories","categories.id","=","products.category_id")
+//                            ->leftJoin("brands","brands.id","=","products.brand_id")
+//                            ->select("products.*","categories.category_name","brands.brand_name")
+//                            ->paginate(20);
+        $products = Product::with("Category")->with("Brand")->orderBy("id","desc")->paginate(20);
         return view("product.list",["products"=>$products]);
     }
 
@@ -96,5 +100,46 @@ class WebController extends Controller
                 "categories"=>$categories,
                 "brands" => $brands
             ]);
+    }
+
+    public function saveProduct(Request $request){
+        $request->validate([
+            "product_name"=> "required",
+            "product_desc"=> "required",
+            "price"=> "required|numeric|min:0",
+            "qty"=> "required|numeric|min:1",
+            "category_id"=> "required",
+            "brand_id"=> "required",
+        ]);
+        try {
+            $productImage = null;
+            // xu ly de dua anh len thu muc media trong public
+            // sau do lay nguon file cho vao bien $productImage
+            if($request->hasFile("product_image")){
+                $file = $request->file("product_image");
+                $allow = ["png","jpg","jpeg","gif"];
+                $extName = $file->getClientOriginalExtension();// lay duoi file
+                if(in_array($extName,$allow)){
+                    // get fileName
+                    $fileName = time().$file->getClientOriginalName();
+                    // upload file into public/media
+                    $file->move(public_path("media"),$fileName);
+                    // convert string to productImage
+                    $productImage = "media/".$fileName;
+                }
+            }
+            Product::create([
+                "product_name"=> $request->get("product_name"),
+                "product_image"=>$productImage,
+                "product_desc"=> $request->get("product_desc"),
+                "price"=> $request->get("price"),
+                "qty"=> $request->get("qty"),
+                "category_id"=> $request->get("category_id"),
+                "brand_id"=> $request->get("brand_id"),
+            ]);
+        }catch (\Exception $e){
+            return redirect()->back();
+        }
+        return redirect()->to("/list-product");
     }
 }

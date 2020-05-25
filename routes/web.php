@@ -32,3 +32,4 @@ Route::delete("/delete-category/{id}","WebController@deleteCategory");
 // Product
 Route::get("/list-product","WebController@listProduct");
 Route::get("/new-product","WebController@newProduct");
+Route::post("/save-product","WebController@saveProduct");
