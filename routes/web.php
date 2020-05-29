@@ -15,28 +15,10 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
 
-Route::get('/', "WebController@index");
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get("/demo-routing","WebController@demoRouting");
+require_once "user.php";
 
 Route::group(["middleware"=>["admin","auth"],"prefix"=>"admin"],function (){
-    Route::get("/","WebController@dashboard");
-    // Category
-    Route::get("/list-category","WebController@listCategory");
-    Route::get("/new-category","WebController@newCategory");
-    Route::post("/save-category","WebController@saveCategory");
-
-    Route::get("/edit-category/{id}","WebController@editCategory");
-    Route::put("/update-category/{id}","WebController@updateCategory");
-
-    Route::delete("/delete-category/{id}","WebController@deleteCategory");
-
-    // Product
-    Route::get("/list-product","WebController@listProduct");
-    Route::get("/new-product","WebController@newProduct");
-    Route::post("/save-product","WebController@saveProduct");
-
+    require_once "admin.php";
 });
 
 
