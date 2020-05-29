@@ -8,7 +8,7 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form role="form" action="{{url("save-category")}}" method="post">
+        <form role="form" action="{{url("/admin/save-category")}}" method="post">
             @method("POST")
             @csrf
             <div class="card-body">

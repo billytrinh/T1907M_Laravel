@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="card-header">
-            <a href="{{url("new-product")}}" class="float-right btn btn-outline-primary">+</a>
+            <a href="{{url("/admin/new-product")}}" class="float-right btn btn-outline-primary">+</a>
         </div>
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">

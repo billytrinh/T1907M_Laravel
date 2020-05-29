@@ -16,6 +16,10 @@ class WebController extends Controller
         return view("home");
     }
 
+    public function dashboard(){
+        return view("dashboard");
+    }
+
     public function listCategory(){
         // Query builder
         //$categories = DB::table("categories")->get();
@@ -49,7 +53,7 @@ class WebController extends Controller
         }catch (\Exception $exception){
             return redirect()->back();
         }
-        return redirect()->to("/list-category");
+        return redirect()->to("admin/list-category");
     }
 
     public function editCategory($id){
@@ -72,7 +76,7 @@ class WebController extends Controller
         }catch (\Exception $exception){
             return redirect()->back();
         }
-        return redirect()->to("/list-category");
+        return redirect()->to("admin/list-category");
     }
 
     public function deleteCategory($id){
@@ -81,7 +85,7 @@ class WebController extends Controller
             $category->delete();
         }catch (\Exception $exception){
         }
-        return redirect()->to("/list-category");
+        return redirect()->to("admin/list-category");
     }
 
     public function listProduct(){
@@ -140,6 +144,6 @@ class WebController extends Controller
         }catch (\Exception $e){
             return redirect()->back();
         }
-        return redirect()->to("/list-product");
+        return redirect()->to("admin/list-product");
     }
 }
