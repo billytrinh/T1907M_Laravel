@@ -11,6 +11,14 @@ class Category extends Model
     public $fillable = [
         "category_name"
     ];
+    // version 6.x
+//    public function getRouteKeyName(){
+//        return "slug";
+//    }
+
+    public function getCategoryUrl(){
+        return url("/category/{$this->__get("slug")}");
+    }
 
     public function get($key){
         if(is_null($this->__get($key)))
