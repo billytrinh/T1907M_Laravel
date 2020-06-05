@@ -51,9 +51,9 @@ class HomeController extends Controller
         $qty = $request->has("qty")&& (int)$request->get("qty")>0?(int)$request->get("qty"):1;
         $myCart = session()->has("my_cart")&& is_array(session("my_cart"))?session("my_cart"):[];
         $contain = false;
-        foreach ($myCart as $item){
+        foreach ($myCart as $key=>$item){
             if($item["product_id"] == $product->__get("id")){
-                $item["qty"]+= $qty;
+                $myCart[$key]["qty"] += $qty;
                 $contain = true;
                 break;
             }
