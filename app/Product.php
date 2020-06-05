@@ -29,6 +29,10 @@ class Product extends Model
         return "$".number_format($this->__get("price"),2);
     }
 
+    public function getProductUrl(){
+        return url("/product/{$this->__get("slug")}");
+    }
+
     public function Category(){
         return $this->belongsTo("\App\Category","category_id");// tra ve 1 object
     }
