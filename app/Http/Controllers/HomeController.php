@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Cart;
 use App\Category;
+use App\Events\OrderCreated;
+use App\Order;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -117,6 +119,53 @@ class HomeController extends Controller
     }
 
     public function checkout(){
-        return view("frontend.checkout");
+        $cart = Cart::where("user_id",Auth::id())
+            ->where("is_checkout",true)
+            ->with("getItems")
+            ->firstOrFail();
+        return view("frontend.checkout",[
+            "cart"=>$cart
+        ]);
     }
+
+    public function placeOrder(Request $request){
+        $request->validate([
+            "username"=>"required",
+            "address"=>"required",
+            "telephone"=>"required",
+        ]);
+        $cart = Cart::where("user_id",Auth::id())
+            ->where("is_checkout",true)
+            ->with("getItems")
+            ->firstOrFail();
+        $grandTotal = 0;
+        foreach ($cart->getItems as $item){
+            $grandTotal+= $item->pivot->__get("qty")*$item->__get("price");
+        }
+        try{
+            $order = Order::create([
+                "user_id"=>Auth::id(),
+                "username"=>$request->get("username"),
+                "address"=>$request->get("address"),
+                "telephone"=>$request->get("telephone"),
+                "note"=>$request->get("note"),
+                "grand_total"=>$grandTotal,
+                "status"=> Order::PENDING
+            ]);
+            foreach ($cart->getItems as $item){
+                DB::table("orders_products")->insert([
+                    "order_id"=>$order->__get("id"),
+                    "product_id"=>$item->__get("id"),
+                    "price" => $item->__get("price"),
+                    "qty"=> $item->pivot->__get("qty")
+                ]);
+            }
+            event(new OrderCreated($order));
+
+        }catch (\Exception $exception){
+
+        }
+        return redirect()->to("/");
+    }
+
 }
