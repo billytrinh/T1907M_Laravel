@@ -26,7 +26,19 @@
             </ul>
         </div>
         <div class="header__top__right__auth">
-            <a href="#"><i class="fa fa-user"></i> Login</a>
+            @guest
+                <a href="{{url("/login")}}"><i class="fa fa-user"></i> Login</a>
+            @else
+                <a class="dropdown-item" href="{{ route('logout') }}"
+                   onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            @endguest
         </div>
     </div>
     <nav class="humberger__menu__nav mobile-menu">
