@@ -36,11 +36,11 @@ return [
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
-            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-            'port' => env('MAIL_PORT', 587),
-            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'username' => env('MAIL_USERNAME'),
-            'password' => env('MAIL_PASSWORD'),
+            'host' => 'smtp.gmail.com',//env('MAIL_HOST', 'smtp.mailgun.org'),
+            'port' => 587,//env('MAIL_PORT', 587),
+            'encryption' => 'tls',//env('MAIL_ENCRYPTION', 'tls'),
+            'username' => 'quanghoa.trinh@gmail.com',//env('MAIL_USERNAME'),
+            'password' => 'lpqriaxgvlsdlymj',//env('MAIL_PASSWORD'),
             'timeout' => null,
         ],
 

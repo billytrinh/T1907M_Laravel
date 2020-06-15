@@ -7,8 +7,10 @@ use App\Category;
 use App\Events\OrderCreated;
 use App\Order;
 use App\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Psy\Util\Str;
 
@@ -21,16 +23,22 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $most_views = Product::orderBy("view_count","DESC")->limit(8)->get();
-        $featureds = Product::orderBy("updated_at","DESC")->limit(8)->get();
-        $latest_1 = Product::orderBy("created_at","DESC")->limit(3)->get();
-        $latest_2 = Product::orderBy("created_at","DESC")->offset(3)->limit(3)->get();
-        return view("frontend.home",[
-            "most_views"=>$most_views,
-            "featureds" =>$featureds,
-            "latest_1" => $latest_1,
-            "latest_2" => $latest_2,
-        ]);
+        if(!Cache::has("home_page")){
+            $most_views = Product::orderBy("view_count","DESC")->limit(8)->get();
+            $featureds = Product::orderBy("updated_at","DESC")->limit(8)->get();
+            $latest_1 = Product::orderBy("created_at","DESC")->limit(3)->get();
+            $latest_2 = Product::orderBy("created_at","DESC")->offset(3)->limit(3)->get();
+
+            $view =  view("frontend.home",[
+                "most_views"=>$most_views,
+                "featureds" =>$featureds,
+                "latest_1" => $latest_1,
+                "latest_2" => $latest_2,
+            ])->render();
+            $now = Carbon::now();
+            Cache::put("home_page",$view,$now->addMinutes(20));
+        }
+        return Cache::get("home_page");
     }
 
     public function category(Category $category){
