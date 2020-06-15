@@ -23,7 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        die("aa");
         if(!Cache::has("home_page")){
             $most_views = Product::orderBy("view_count","DESC")->limit(8)->get();
             $featureds = Product::orderBy("updated_at","DESC")->limit(8)->get();
