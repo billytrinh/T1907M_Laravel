@@ -23,7 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if(!Cache::has("home_page")){
+        //if(!Cache::has("home_page")){
             $most_views = Product::orderBy("view_count","DESC")->limit(8)->get();
             $featureds = Product::orderBy("updated_at","DESC")->limit(8)->get();
             $latest_1 = Product::orderBy("created_at","DESC")->limit(3)->get();
@@ -37,7 +37,7 @@ class HomeController extends Controller
             ])->render();
             $now = Carbon::now();
             Cache::put("home_page",$view,$now->addMinutes(20));
-        }
+        //}
         return Cache::get("home_page");
     }
 

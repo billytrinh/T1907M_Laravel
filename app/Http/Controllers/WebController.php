@@ -50,6 +50,8 @@ class WebController extends Controller
 //                "created_at"=> Carbon::now(),
 //                "updated_at"=> Carbon::now(),
 //            ]);
+            $data["message"] = "Vừa thêm 1 danh mục mới là ".$request->get("category_name");
+            notify("global","new_category",$data);
         }catch (\Exception $exception){
             return redirect()->back();
         }
@@ -83,6 +85,7 @@ class WebController extends Controller
         $category = Category::findOrFail($id);
         try{
             $category->delete();
+            notify("home","home_page",[]);
         }catch (\Exception $exception){
         }
         return redirect()->to("admin/list-category");

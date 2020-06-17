@@ -1,5 +1,29 @@
 @extends("frontend.layout")
 @section("content")
+    <!-- demo notification -->
+    <script src="https://js.pusher.com/6.0/pusher.min.js"></script>
+    <script>
+
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('493e83d7e7eeebbeb061', {
+            cluster: 'ap1'
+        });
+
+        var channel = pusher.subscribe('global');
+        channel.bind('new_category', function(data) {
+            alert(data.message);
+        });
+        channel.bind("new_product",function(data) {
+            alert(data.message);
+        });
+        var vtv6 = pusher.subscribe("home");
+        vtv6.bind("home_page",function(data) {
+            location.reload();
+        });
+    </script>
+
     <!-- Hero Section Begin -->
     <section class="hero">
         <div class="container">
@@ -69,7 +93,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title">
-                        <h2>Featured Product</h2>
+                        <h2>{{hello()}}</h2>
                     </div>
                     <div class="featured__controls">
                         <ul>
